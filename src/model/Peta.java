@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import sun.util.logging.PlatformLogger;
 
@@ -114,6 +115,110 @@ public class Peta extends JPanel {
         return this.tinggi;
     }
     
+    public void PerintahGerak(String in){
+        String input[] = in.split(" ");
+        if (input.length > 2) {
+            JOptionPane.showMessageDialog(null, "Jumlah Karakter Lebih dari 2");
+        }else if (input.length == 2) {
+            if (input[0].matches("[udrl]")) {
+                semuaPerintah.add(in);
+                if (input[0].equalsIgnoreCase("u")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(input[1])); i++) {
+                        if (cekTabrakTembok(human, "u")) {
+                            return;
+                        }else{
+                            human.Gerak(0, -jarak);
+                            repaint();
+                        }
+                        if (complated) {
+                            JOptionPane.showMessageDialog(null, "Selamat anda menyelesaikan game ini");
+                        }
+                    }
+                }if (input[0].equalsIgnoreCase("d")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(input[1])); i++) {
+                        if (cekTabrakTembok(human, "d")) {
+                            return;
+                        }else{
+                            human.Gerak(0, -jarak);
+                            repaint();
+                        }
+                        if (complated) {
+                            JOptionPane.showMessageDialog(null, "Selamat anda menyelesaikan game ini");
+                        }
+                    }
+                }if (input[0].equalsIgnoreCase("r")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(input[1])); i++) {
+                        if (cekTabrakTembok(human, "r")) {
+                            return;
+                        }else{
+                            human.Gerak(0, -jarak);
+                            repaint();
+                        }
+                        if (complated) {
+                            JOptionPane.showMessageDialog(null, "Selamat anda menyelesaikan game ini");
+                        }
+                    }
+                }if (input[0].equalsIgnoreCase("l")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(input[1])); i++) {
+                        if (cekTabrakTembok(human, "l")) {
+                            return;
+                        }else{
+                            human.Gerak(0, -jarak);
+                            repaint();
+                        }
+                        if (complated) {
+                            JOptionPane.showMessageDialog(null, "Selamat anda menyelesaikan game ini");
+                        }
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Kata tidak dikenali");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Jumlah kata yang dibutuhkan kurang");
+        }
+    }
     
+    private boolean cekTabrakTembok(Pixel pemain, String input){
+        boolean bantu = false;
+        if (input.equalsIgnoreCase("l")) {
+            for (int i = 0; i < tembok.size(); i++) {
+                Tembok wall = (Tembok) tembok.get(i);
+                if (pemain.PosisiKiriObjek(wall)) {
+                    bantu = true;
+                    break;
+                }
+            }
+        }else if (input.equalsIgnoreCase("r")) {
+            for (int i = 0; i < tembok.size(); i++) {
+                Tembok wall = (Tembok) tembok.get(i);
+                if (pemain.PosisiKananObjek(wall)) {
+                    bantu = true;
+                    break;
+                }
+            }
+        }if (input.equalsIgnoreCase("u")) {
+            for (int i = 0; i < tembok.size(); i++) {
+                Tembok wall = (Tembok) tembok.get(i);
+                if (pemain.PosisiAtasObjek(wall)) {
+                    bantu = true;
+                    break;
+                }
+            }
+        }if (input.equalsIgnoreCase("d")) {
+            for (int i = 0; i < tembok.size(); i++) {
+                Tembok wall = (Tembok) tembok.get(i);
+                if (pemain.PosisiBawahObjek(wall)) {
+                    bantu = true;
+                    break;
+                }
+            }
+        }
+        return bantu;
+    }
+    
+    public void isCompleted(){
+        
+    }
     
 }

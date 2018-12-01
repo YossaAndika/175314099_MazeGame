@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Maze;
 
 import java.awt.Image;
 import java.net.URL;
@@ -11,16 +11,15 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author windows10
+ * @author Aweng
  */
-public class Tembok extends Pixel{
-
+public class Tembok extends Pixel {
     public Tembok(int x, int y) {
-        super(x, y);
-        URL loc = this.getClass().getResource("/image/wall.jpg");
-        ImageIcon g = new ImageIcon(loc);
-        Image image = g.getImage();
+        super(x, y);//Mengakses constructor superclass (pixel) oleh subclass (Tembok) dan lsg di set nilai xy Tembok 
+        URL loc = this.getClass().getResource("/Image/tembok.jpg");
+        ImageIcon wall = new ImageIcon(loc);
+        Image image = wall.getImage();
         this.setImage(image);
+
     }
-    
 }

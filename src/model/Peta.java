@@ -37,16 +37,20 @@ public class Peta extends JPanel {
     private final char FINISH = 'o';
     private final char HUMAN = '@';
     private final char KOSONG = '.';
-    private final char N = '\n';
+    private final char N = 'n';
     private int lebar = 0;
     private int tinggi = 0;
-    private int jarak = 50;
+    private int jarak = 40;
 
-    private File peta = new File("/Maze.txt");
+    private File peta = new File("Maze.txt");
     private ArrayList semuaPerintah = new ArrayList();
 
     public Peta() {
 
+    }
+
+    public Peta(File file) {
+        setPeta(file);
     }
 
     public void setPeta(File file) {
@@ -56,7 +60,6 @@ public class Peta extends JPanel {
                 int posisiX = 0;
                 int posisiY = 0;
                 Tembok wall;
-                Finish fin;
                 int data;
                 int kolom = 0;
                 while ((data = input.read()) != -1) {

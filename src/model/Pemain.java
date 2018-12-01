@@ -17,7 +17,7 @@ public class Pemain extends Pixel{
 
     public Pemain(int x, int y) {
         super(x,y);
-        URL loc = this.getClass().getResource("/mario.jpg");
+        URL loc = this.getClass().getResource("/image/pemain.jpg");
         ImageIcon iia = new ImageIcon(loc);
         Image image = iia.getImage();
     }
@@ -28,13 +28,13 @@ public class Pemain extends Pixel{
         this.setPosisiX(nx);
         this.setPosisiY(ny);
         if (x < 0) {
-            URL loc = this.getClass().getResource("/mario.jpg");
+            URL loc = this.getClass().getResource("/image/pemain.jpg");
             ImageIcon inverse = new ImageIcon(loc);
             this.setImage(null);
             Image image = inverse.getImage();
             this.setImage(image);
         }else if (x > 0) {
-            URL loc = this.getClass().getResource("/mario.jpg");
+            URL loc = this.getClass().getResource("/image/pemain.jpg");
             ImageIcon iia = new ImageIcon(loc);
             this.setImage(null);
             Image image = iia.getImage();

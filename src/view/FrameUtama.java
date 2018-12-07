@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frame;
+package view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFileChooser;
-import Maze.Peta;
+import model.Peta;
 
 /**
  *
@@ -60,6 +60,7 @@ public class FrameUtama extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        saveButton = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
@@ -165,6 +166,14 @@ public class FrameUtama extends javax.swing.JFrame {
         });
         fileMenu.add(openMenuItem);
 
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveButton);
+
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,6 +250,16 @@ public class FrameUtama extends javax.swing.JFrame {
         menuFrame.setLocationRelativeTo(null);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        int simpan = fc.showSaveDialog(this);
+        if (simpan == JFileChooser.APPROVE_OPTION) {
+            PixelPanel.add(peta);
+            peta.saveNote(fc.getSelectedFile());
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,5 +313,6 @@ public class FrameUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JTextArea outputTextArea;
     private javax.swing.JTextField perintah;
+    private javax.swing.JMenuItem saveButton;
     // End of variables declaration//GEN-END:variables
 }

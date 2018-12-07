@@ -11,35 +11,22 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author windows10
+ * @author Aweng
  */
-public class Pemain extends Pixel{
+public class Pemain extends Pixel {
 
     public Pemain(int x, int y) {
-        super(x,y);
-        URL loc = this.getClass().getResource("/image/pemain.jpg");
+        super(x, y);//Mengakses constructor superclass (pixel) oleh subclass (Pemain) dan lsg di set nilai xy Pemain 
+        URL loc = this.getClass().getResource("/image/pemain.gif");
         ImageIcon iia = new ImageIcon(loc);
         Image image = iia.getImage();
-    }
-    
-    public void Gerak(int x, int y){
-        int nx = this.getPosisiX() + x;
-        int ny = this.getPosisiY() + y;
-        this.setPosisiX(nx);
-        this.setPosisiY(ny);
-        if (x < 0) {
-            URL loc = this.getClass().getResource("/image/pemain.jpg");
-            ImageIcon inverse = new ImageIcon(loc);
-            this.setImage(null);
-            Image image = inverse.getImage();
-            this.setImage(image);
-        }else if (x > 0) {
-            URL loc = this.getClass().getResource("/image/pemain.jpg");
-            ImageIcon iia = new ImageIcon(loc);
-            this.setImage(null);
-            Image image = iia.getImage();
-            this.setImage(image);
-        }
+        this.setImage(image);
     }
 
+    public void Gerak(int x, int y) {
+        int nx = this.getPosisiX() + x;//bergerak kiri atau kanan, tergantung nilai x jika negative maka ke kiri, positive maka ke kanan
+        int ny = this.getPosisiY() + y;//bergerak atas atau bawah, tergantung nilai y jika negative maka ke atas, positive maka ke bawah
+        this.setPosisiX(nx);
+        this.setPosisiY(ny);
+    }
 }

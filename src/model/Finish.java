@@ -11,16 +11,15 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author windows10
+ * @author admin
  */
-public class Finish extends Pixel{
+public class Finish extends Pixel {
 
     public Finish(int x, int y) {
-        super(x,y);
-        URL loc = this.getClass().getResource("/image/finish.jpg");
+        super(x, y);//Mengakses constructor superclass (pixel) oleh subclass (Finish) dan lsg di set nilai xy Finish 
+        URL loc = this.getClass().getResource("/Image/finish.jpg");
         ImageIcon g = new ImageIcon(loc);
         Image image = g.getImage();
         this.setImage(image);
     }
-    
 }

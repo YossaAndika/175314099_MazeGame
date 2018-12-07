@@ -9,21 +9,19 @@ import java.awt.Image;
 
 /**
  *
- * @author windows10
+ * @author Aweng
  */
-class Pixel {
+public class Pixel {
 
     private int posisiX;
     private int posisiY;
-    private Image image;
-    public final int JARAK = 40;
+    private Image image;//untuk menset gambar dalam pixel posisi xy
 
-    public Pixel() {
-    }
-
-    public Pixel(int posisiX, int posisiY) {
-        this.posisiX = posisiX;
-        this.posisiY = posisiY;
+    private int Jarak=20;//jika sudah menentukan jarak/pixel 20 maka semua gambar harus di set 20x20 pixel, dan jarak harus sama dengan dikelas Peta
+    
+    public Pixel(int x, int y) {
+        this.posisiX = x;
+        this.posisiY = y;
     }
 
     public int getPosisiX() {
@@ -51,7 +49,7 @@ class Pixel {
     }
 
     public boolean PosisiKiriObjek(Pixel Objek) {
-        if (((this.getPosisiX() - JARAK) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
+        if (((this.getPosisiX() - Jarak) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
             return true;
         } else {
             return false;
@@ -59,7 +57,7 @@ class Pixel {
     }
 
     public boolean PosisiKananObjek(Pixel Objek) {
-        if (((this.getPosisiX() + JARAK) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
+        if (((this.getPosisiX() + Jarak) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
             return true;
         } else {
             return false;
@@ -67,7 +65,7 @@ class Pixel {
     }
 
     public boolean PosisiAtasObjek(Pixel Objek) {
-        if (((this.getPosisiX() - JARAK) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
+        if (((this.getPosisiY() - Jarak) == Objek.getPosisiY()) && (this.getPosisiX() == Objek.getPosisiX())) {
             return true;
         } else {
             return false;
@@ -75,10 +73,11 @@ class Pixel {
     }
 
     public boolean PosisiBawahObjek(Pixel Objek) {
-        if (((this.getPosisiX() + JARAK) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
+        if (((this.getPosisiY() + Jarak) == Objek.getPosisiY()) && (this.getPosisiX() == Objek.getPosisiX())) {
             return true;
         } else {
             return false;
         }
     }
+
 }

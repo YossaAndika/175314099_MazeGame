@@ -122,10 +122,7 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "u")) {
                             return;
-                        } 
-                        if (cekPemainTembok("u")) {
-                            return;
-                        } else {
+                        }else {
                             human.Gerak(0, -jarak);
                             repaint();
                         }
@@ -135,10 +132,7 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "d")) {
                             return;
-                        }  
-                        if (cekPemainTembok("d")) {
-                            return;
-                        } else {
+                        }else {
                             human.Gerak(0, jarak);
                             repaint();
                         }
@@ -147,10 +141,7 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "r")) {
                             return;
-                        } 
-                        if (cekPemainTembok("r")) {
-                            return;
-                        } else {
+                        }else {
                             human.Gerak(jarak, 0);
                             repaint();
                         }
@@ -158,9 +149,6 @@ public class Peta extends JPanel {
                 } else if (in[0].equalsIgnoreCase("l")) {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "l")) {
-                            return;
-                        } 
-                        if (cekPemainTembok("l")) {
                             return;
                         } else {
                             human.Gerak(-jarak, 0);
@@ -189,9 +177,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-//                else if (pemain.PosisiKiriObjek(finish)) {
-//                    isCompleted();
-//                }
+                else if (pemain.PosisiKiriObjek(finish)) {
+                    isCompleted();
+                }
             }
 
         } else if (input.equalsIgnoreCase("r")) {
@@ -201,9 +189,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-//                else if(human.PosisiKananObjek(finish)){
-//                    isCompleted();
-//                }
+                else if(human.PosisiKananObjek(finish)){
+                    isCompleted();
+                }
             }
         } else if (input.equalsIgnoreCase("u")) {
             for (int i = 0; i < tembok.size(); i++) {
@@ -212,9 +200,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-//                else if(pemain.PosisiAtasObjek(finish)){
-//                    isCompleted();
-//                }
+                else if(pemain.PosisiAtasObjek(finish)){
+                    isCompleted();
+                }
             }
         } else if (input.equalsIgnoreCase("d")) {
             for (int i = 0; i < tembok.size(); i++) {
@@ -223,46 +211,23 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-//                else if(pemain.PosisiBawahObjek(finish)){
-//                    isCompleted();
-//                }
+                else if(pemain.PosisiBawahObjek(finish)){
+                    isCompleted();
+                }
             }
         }
         return bantu;//default return false
     }
     
-    private boolean cekPemainTembok(String input) {
-        boolean bantu = false;
-        if (input.equalsIgnoreCase("l")) {
-                if (human.PosisiKiriObjek(finish)) {//cek apakah pemain sebelah kiri bola ke 
-                        isCompleted();
-                        bantu = true;
-                }
-            }
-             else if (input.equalsIgnoreCase("r")) {
-                if (human.PosisiKananObjek(finish)) {//cek apakah pemain sebelah kanan bola ke i 
-                        isCompleted();
-                        bantu = true;
-               
-              }        
-        } else if (input.equalsIgnoreCase("u")) {
-                if (human.PosisiAtasObjek(finish)) {//cek apakah bola 1 di atas pemain
-                        isCompleted();
-                        bantu = true;
-            }
-        } else if (input.equalsIgnoreCase("d")) {
-                if (human.PosisiBawahObjek(finish)) {//cek apakah bola 1 di bawah pemain
-                        isCompleted();
-                        bantu = true;
-            }
-        }
-        return bantu;
-    }
-
     public void isCompleted() {
-        Pixel pixel = new Pixel(human.getPosisiX(), human.getPosisiY());
-        if (pixel.equals(finish)) {
-            JOptionPane.showMessageDialog(this, "Winner");
+//        if (human.getPosisiX() == finish.getPosisiX() && human.getPosisiY() == finish.getPosisiY()) {
+//            JOptionPane.showMessageDialog(this, "Winner");
+//        }
+        
+        if (human.getPosisiX() == finish.getPosisiX()) {
+            if (human.getPosisiY() == finish.getPosisiY()) {
+                JOptionPane.showMessageDialog(this, "Winner");
+            }
         }
     }
 

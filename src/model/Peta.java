@@ -122,7 +122,7 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "u")) {
                             return;
-                        }else {
+                        } else {
                             human.Gerak(0, -jarak);
                             repaint();
                         }
@@ -150,7 +150,7 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "l")) {
                             return;
-                        } else {
+                        }else {
                             human.Gerak(-jarak, 0);
                             repaint();
                         }
@@ -219,15 +219,11 @@ public class Peta extends JPanel {
         return bantu;//default return false
     }
     
+
     public void isCompleted() {
-//        if (human.getPosisiX() == finish.getPosisiX() && human.getPosisiY() == finish.getPosisiY()) {
-//            JOptionPane.showMessageDialog(this, "Winner");
-//        }
-        
-        if (human.getPosisiX() == finish.getPosisiX()) {
-            if (human.getPosisiY() == finish.getPosisiY()) {
-                JOptionPane.showMessageDialog(this, "Winner");
-            }
+        Pixel pixel = null;
+        if (pixel.getPosisiX() == finish.getPosisiX() && pixel.getPosisiY() == finish.getPosisiY()) {
+            JOptionPane.showMessageDialog(this, "Winner");
         }
     }
 

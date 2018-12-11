@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  */
 public class Peta extends JPanel {
 
-    private boolean complated = false;
+    private boolean completed = false;
     private String map1 = "";
     private ArrayList tembok = new ArrayList();
     private Finish finish;
@@ -40,7 +40,7 @@ public class Peta extends JPanel {
     private int tinggi = 0;
     private int jarak = 20;
 
-    private File peta;
+    private File peta = new File("Image/Maze.txt");
     private ArrayList semuaPerintah = new ArrayList();
 
     public Peta(File file) {
@@ -112,7 +112,7 @@ public class Peta extends JPanel {
     }
 
     public void PerintahGerak(String input) {
-        String in[] = input.split(" ");
+        String in[] = input.split("");
         if (in.length > 2) {
             JOptionPane.showMessageDialog(null, "Jumlah kata lebih dari 2");
         } else if (in.length == 2) {
@@ -124,7 +124,13 @@ public class Peta extends JPanel {
                             return;
                         } else {
                             human.Gerak(0, -jarak);
+                            isCompleted();
                             repaint();
+                        }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
 
                     }
@@ -132,18 +138,30 @@ public class Peta extends JPanel {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "d")) {
                             return;
-                        }else {
+                        } else {
                             human.Gerak(0, jarak);
+                            isCompleted();
                             repaint();
+                        }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
                     }
                 } else if (in[0].equalsIgnoreCase("r")) {
                     for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
                         if (cekObjekNabrakTembok(human, "r")) {
                             return;
-                        }else {
+                        } else {
                             human.Gerak(jarak, 0);
+                            isCompleted();
                             repaint();
+                        }
+                        if (completed) {
+                           JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
                     }
                 } else if (in[0].equalsIgnoreCase("l")) {
@@ -152,7 +170,13 @@ public class Peta extends JPanel {
                             return;
                         }else {
                             human.Gerak(-jarak, 0);
+                            isCompleted();
                             repaint();
+                        }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
                     }
                 } else if (in[0].equalsIgnoreCase("z")) {
@@ -177,9 +201,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-                else if (pemain.PosisiKiriObjek(finish)) {
-                    isCompleted();
-                }
+//                else if (pemain.PosisiKiriObjek(finish)) {
+//                    isCompleted();
+//                }
             }
 
         } else if (input.equalsIgnoreCase("r")) {
@@ -189,9 +213,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-                else if(human.PosisiKananObjek(finish)){
-                    isCompleted();
-                }
+//                else if(human.PosisiKananObjek(finish)){
+//                    isCompleted();
+//                }
             }
         } else if (input.equalsIgnoreCase("u")) {
             for (int i = 0; i < tembok.size(); i++) {
@@ -200,9 +224,9 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-                else if(pemain.PosisiAtasObjek(finish)){
-                    isCompleted();
-                }
+//                else if(pemain.PosisiAtasObjek(finish)){
+//                    isCompleted();
+//                }
             }
         } else if (input.equalsIgnoreCase("d")) {
             for (int i = 0; i < tembok.size(); i++) {
@@ -211,19 +235,25 @@ public class Peta extends JPanel {
                     bantu = true;
                     break;
                 }
-                else if(pemain.PosisiBawahObjek(finish)){
-                    isCompleted();
-                }
+//                else if(pemain.PosisiBawahObjek(finish)){
+//                    isCompleted();
+//                }
             }
         }
         return bantu;//default return false
     }
     
-
+    
     public void isCompleted() {
-        Pixel pixel = null;
-        if (pixel.getPosisiX() == finish.getPosisiX() && pixel.getPosisiY() == finish.getPosisiY()) {
-            JOptionPane.showMessageDialog(this, "Winner");
+//        Pixel pixel = new Pixel(human.getPosisiX(), human.getPosisiY());
+//        if (pixel.equals(finish)) {
+//            completed = true;
+//        }
+        
+        if (human.getPosisiX() == finish.getPosisiX()) {
+            if (human.getPosisiY() == finish.getPosisiY()) {
+                completed = true;
+            }
         }
     }
 
@@ -231,6 +261,7 @@ public class Peta extends JPanel {
         semuaPerintah.clear();//hapus semua perintah yang tersimpan
         tembok.clear();//hapus tembok
         map.clear();//hapus map
+        completed = false;
         setPeta(peta);//set ulang gambar peta
         repaint();//gambar ulang
     }

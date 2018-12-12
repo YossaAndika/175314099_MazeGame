@@ -265,6 +265,7 @@ public class FrameUtama extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int simpan = fc.showSaveDialog(this);
         if (simpan == JFileChooser.APPROVE_OPTION) {
             PixelPanel.add(peta);

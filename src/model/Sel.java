@@ -11,7 +11,7 @@ import java.awt.Image;
  *
  * @author Aweng
  */
-public class Pixel {
+public class Sel {
 
     private int posisiX;
     private int posisiY;
@@ -19,7 +19,7 @@ public class Pixel {
 
     private int Jarak=20;//jika sudah menentukan jarak/pixel 20 maka semua gambar harus di set 20x20 pixel, dan jarak harus sama dengan dikelas Peta
     
-    public Pixel(int x, int y) {
+    public Sel(int x, int y) {
         this.posisiX = x;
         this.posisiY = y;
     }
@@ -48,7 +48,7 @@ public class Pixel {
         this.image = image;
     }
 
-    public boolean PosisiKiriObjek(Pixel Objek) {
+    public boolean PosisiKiriObjek(Sel Objek) {
         if (((this.getPosisiX() - Jarak) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
             return true;
         } else {
@@ -56,7 +56,7 @@ public class Pixel {
         }
     }
 
-    public boolean PosisiKananObjek(Pixel Objek) {
+    public boolean PosisiKananObjek(Sel Objek) {
         if (((this.getPosisiX() + Jarak) == Objek.getPosisiX()) && (this.getPosisiY() == Objek.getPosisiY())) {
             return true;
         } else {
@@ -64,7 +64,7 @@ public class Pixel {
         }
     }
 
-    public boolean PosisiAtasObjek(Pixel Objek) {
+    public boolean PosisiAtasObjek(Sel Objek) {
         if (((this.getPosisiY() - Jarak) == Objek.getPosisiY()) && (this.getPosisiX() == Objek.getPosisiX())) {
             return true;
         } else {
@@ -72,7 +72,7 @@ public class Pixel {
         }
     }
 
-    public boolean PosisiBawahObjek(Pixel Objek) {
+    public boolean PosisiBawahObjek(Sel Objek) {
         if (((this.getPosisiY() + Jarak) == Objek.getPosisiY()) && (this.getPosisiX() == Objek.getPosisiX())) {
             return true;
         } else {

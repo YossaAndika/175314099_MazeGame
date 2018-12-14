@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  *
  * @author Aweng
  */
-public class Pemain extends Pixel {
+public class Pemain extends Sel {
 
     public Pemain(int x, int y) {
         super(x, y);//Mengakses constructor superclass (pixel) oleh subclass (Pemain) dan lsg di set nilai xy Pemain 

@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  *
  * @author admin
  */
-public class Finish extends Pixel {
+public class Finish extends Sel {
 
     public Finish(int x, int y) {
         super(x, y);//Mengakses constructor superclass (pixel) oleh subclass (Finish) dan lsg di set nilai xy Finish 

@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -32,7 +31,6 @@ public class Peta extends JPanel {
     private ArrayList map = new ArrayList();
     private ArrayList objekKolom = new ArrayList();
     private Pemain human;
-    private LinkedList<String> undo = new LinkedList<String>();
     private final char TEMBOK = '#';
     private final char FINISH = 'o';
     private final char HUMAN = '@';
@@ -104,7 +102,7 @@ public class Peta extends JPanel {
         map.add(human);
         for (int i = 0; i < map.size(); i++) {
             if (map.get(i) != null) {
-                Pixel item = (Pixel) map.get(i);//map diterjemahkan dalam kelas pixel.
+                Sel item = (Sel) map.get(i);//map diterjemahkan dalam kelas pixel.
                 g.drawImage(item.getImage(), item.getPosisiX(), item.getPosisiY(), this);//proses gambar di panel
             }
         }
@@ -128,105 +126,86 @@ public class Peta extends JPanel {
     
     public void PerintahGerak(String input) {
         String in[] = input.split("");
-        if (in[0].equalsIgnoreCase("z") && in[1].matches("[123456789]")) {
-            semuaPerintah.add(input);
-            if (!undo.isEmpty()) {
-                for (int index = Integer.parseInt(String.valueOf(in[1])); index > 0; index--) {
-                    String x = undo.removeLast();
-                    String un[] = x.split(" ");
-                    if (un[0].equalsIgnoreCase("u")) {
-                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
-                            if (cekObjekNabrakTembok(human, "u")) {
-                                return;
-                            } else {
-                                human.Gerak(0, jarak);
-                                repaint();
-                            }
-                            
+        if (in.length > 2) {
+            JOptionPane.showMessageDialog(null, "Jumlah kata lebih dari 2");
+        } else if (in.length == 2) {
+            if (in[0].matches("[udrlz]")) {
+                semuaPerintah.add(input);
+                if (in[0].equalsIgnoreCase("u")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekTabrakTembok(human, "u")) {
+                            return;
+                        } else {
+                            human.Gerak(0, -jarak);
+                            isCompleted();
+                            repaint();
                         }
-                    } else if (un[0].equalsIgnoreCase("d")) {
-                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
-                            if (cekObjekNabrakTembok(human, "d")) {
-                                return;
-                            } else {
-                                human.Gerak(0, -jarak);
-                                repaint();
-                            }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
-                    } else if (un[0].equalsIgnoreCase("r")) {
-                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
-                            if (cekObjekNabrakTembok(human, "r")) {
-                                return;
-                            } else {
-                                human.Gerak(-jarak, 0);
-                                repaint();
-                            }
+
+                    }
+                } else if (in[0].equalsIgnoreCase("d")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekTabrakTembok(human, "d")) {
+                            return;
+                        } else {
+                            human.Gerak(0, jarak);
+                            isCompleted();
+                            repaint();
                         }
-                    } else if (un[0].equalsIgnoreCase("l")) {
-                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
-                            if (cekObjekNabrakTembok(human, "l")) {
-                                return;
-                            } else {
-                                human.Gerak(jarak, 0);
-                                repaint();
-                            }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
                         }
                     }
+                } else if (in[0].equalsIgnoreCase("r")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekTabrakTembok(human, "r")) {
+                            return;
+                        } else {
+                            human.Gerak(jarak, 0);
+                            isCompleted();
+                            repaint();
+                        }
+                        if (completed) {
+                           JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
+                        }
+                    }
+                } else if (in[0].equalsIgnoreCase("l")) {
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                        if (cekTabrakTembok(human, "l")) {
+                            return;
+                        }else {
+                            human.Gerak(-jarak, 0);
+                            isCompleted();
+                            repaint();
+                        }
+                        if (completed) {
+                            JOptionPane.showMessageDialog(this, "Winner");
+                            this.restartLevel();
+                            break;
+                        }
+                    }
+                } else if (in[0].equalsIgnoreCase("z")) {
+//                    return "undo " + in[1];
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Sudah Tidak Ada Yang Bisa di Undo, Silahkan Masukan Perintah Terlebih Dahulu");
-            }
-        } else if (in[0].matches("[udrl]") && in[1].matches("[123456789]") && in.length == 2) {
-            undo.addLast(input);
-            semuaPerintah.add(input);
-            if (in[0].equalsIgnoreCase("u")) {
-                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                    if (cekObjekNabrakTembok(human, "u")) {
-                        return;
-                    } else {
-                        human.Gerak(0, -jarak);
-                        isCompleted();
-                        repaint();
-                    }
-                    
-                }
-            } else if (in[0].equalsIgnoreCase("d")) {
-                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                    if (cekObjekNabrakTembok(human, "d")) {
-                        return;
-                    } else {
-                        human.Gerak(0, jarak);
-                        isCompleted();
-                        repaint();
-                    }
-                }
-            } else if (in[0].equalsIgnoreCase("r")) {
-                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                    if (cekObjekNabrakTembok(human, "r")) {
-                        return;
-                    } else {
-                        human.Gerak(jarak, 0);
-                        isCompleted();
-                        repaint();
-                    }
-                }
-            } else if (in[0].equalsIgnoreCase("l")) {
-                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                    if (cekObjekNabrakTembok(human, "l")) {
-                        return;
-                    } else {
-                        human.Gerak(-jarak, 0);
-                        isCompleted();
-                        repaint();
-                    }
-                }
+                JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Input Tidak Valid, Silahkan Lihat Keterangan");
+            JOptionPane.showMessageDialog(null, "Jumlah kata hanya satu");
         }
     }
 
-    private boolean cekObjekNabrakTembok(Pixel pemain, String input) {
+    private boolean cekTabrakTembok(Sel pemain, String input) {
         boolean bantu = false;
         if (input.equalsIgnoreCase("l")) {
             for (int i = 0; i < tembok.size(); i++) {

@@ -267,8 +267,9 @@ public class FrameUtama extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int simpan = fc.showSaveDialog(this);
+        Peta peta = new Peta(file);
         if (simpan == JFileChooser.APPROVE_OPTION) {
-            PixelPanel.add(peta);
+            peta.setMap1(PixelPanel.add(peta).toString());
             peta.saveNote(fc.getSelectedFile());
         }
     }//GEN-LAST:event_saveButtonActionPerformed

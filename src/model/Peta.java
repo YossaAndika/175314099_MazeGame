@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,6 +33,7 @@ public class Peta extends JPanel {
     private ArrayList map = new ArrayList();
     private ArrayList objekKolom = new ArrayList();
     private Pemain human;
+    private LinkedList<String> undo = new LinkedList<>();
     private final char TEMBOK = '#';
     private final char FINISH = 'o';
     private final char HUMAN = '@';
@@ -45,9 +48,9 @@ public class Peta extends JPanel {
     private ArrayList semuaPerintah = new ArrayList();
 
     public Peta() {
-       
+
     }
-   
+
     public Peta(File file) {
         setPeta(file);
     }
@@ -123,85 +126,123 @@ public class Peta extends JPanel {
     public void setMap1(String map1) {
         this.map1 = map1;
     }
-    
+
     public void PerintahGerak(String input) {
         String in[] = input.split("");
-        if (in.length > 2) {
-            JOptionPane.showMessageDialog(null, "Jumlah kata lebih dari 2");
-        } else if (in.length == 2) {
-            if (in[0].matches("[udrlz]")) {
-                semuaPerintah.add(input);
-                if (in[0].equalsIgnoreCase("u")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekTabrakTembok(human, "u")) {
-                            return;
-                        } else {
-                            human.Gerak(0, -jarak);
-                            isCompleted();
-                            repaint();
+        if (in[0].equalsIgnoreCase("z") && in[1].matches("[123456789]")) {
+            semuaPerintah.add(input);
+            if (!undo.isEmpty()) {
+                for (int index = Integer.parseInt(String.valueOf(in[1])); index > 0; index--) {
+                    String x = undo.removeLast();
+                    String un[] = x.split("");
+                    if (un[0].equalsIgnoreCase("u")) {
+                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
+                            if (cekTabrakTembok(human, "u")) {
+                                return;
+                            } else {
+                                human.Gerak(0, jarak);
+                                repaint();
+                            }
                         }
-                        if (completed) {
-                            JOptionPane.showMessageDialog(this, "Winner");
-                            this.restartLevel();
-                            break;
+                    } else if (un[0].equalsIgnoreCase("d")) {
+                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
+                            if (cekTabrakTembok(human, "d")) {
+                                return;
+                            } else {
+                                human.Gerak(0, -jarak);
+                                repaint();
+                            }
                         }
-
-                    }
-                } else if (in[0].equalsIgnoreCase("d")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekTabrakTembok(human, "d")) {
-                            return;
-                        } else {
-                            human.Gerak(0, jarak);
-                            isCompleted();
-                            repaint();
+                    } else if (un[0].equalsIgnoreCase("r")) {
+                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
+                            if (cekTabrakTembok(human, "r")) {
+                                return;
+                            } else {
+                                human.Gerak(-jarak, 0);
+                                repaint();
+                            }
                         }
-                        if (completed) {
-                            JOptionPane.showMessageDialog(this, "Winner");
-                            this.restartLevel();
-                            break;
-                        }
-                    }
-                } else if (in[0].equalsIgnoreCase("r")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekTabrakTembok(human, "r")) {
-                            return;
-                        } else {
-                            human.Gerak(jarak, 0);
-                            isCompleted();
-                            repaint();
-                        }
-                        if (completed) {
-                           JOptionPane.showMessageDialog(this, "Winner");
-                            this.restartLevel();
-                            break;
+                    } else if (un[0].equalsIgnoreCase("l")) {
+                        for (int i = 0; i < Integer.parseInt(String.valueOf(un[1])); i++) {
+                            if (cekTabrakTembok(human, "l")) {
+                                return;
+                            } else {
+                                human.Gerak(jarak, 0);
+                                repaint();
+                            }
                         }
                     }
-                } else if (in[0].equalsIgnoreCase("l")) {
-                    for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
-                        if (cekTabrakTembok(human, "l")) {
-                            return;
-                        }else {
-                            human.Gerak(-jarak, 0);
-                            isCompleted();
-                            repaint();
-                        }
-                        if (completed) {
-                            JOptionPane.showMessageDialog(this, "Winner");
-                            this.restartLevel();
-                            break;
-                        }
-                    }
-                } else if (in[0].equalsIgnoreCase("z")) {
-//                    return "undo " + in[1];
-                } else {
-                    JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Kata Tidak Dikenal");
+                JOptionPane.showMessageDialog(null, "perintah mencapai batas");
+            }
+        } else if (in[0].matches("[udrl]") && in[1].matches("[123456789]") && in.length == 2) {
+            undo.addLast(input);
+            semuaPerintah.add(input);
+            if (in[0].equalsIgnoreCase("u")) {
+                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                    if (cekTabrakTembok(human, "u")) {
+                        return;
+                    } else {
+                        human.Gerak(0, -jarak);
+                        isCompleted();
+                        repaint();
+                    }
+                    if (completed) {
+                        JOptionPane.showMessageDialog(this, "Winner");
+                        this.restartLevel();
+                        break;
+                    }
+
+                }
+            } else if (in[0].equalsIgnoreCase("d")) {
+                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                    if (cekTabrakTembok(human, "d")) {
+                        return;
+                    } else {
+                        human.Gerak(0, jarak);
+                        isCompleted();
+                        repaint();
+                    }
+                    if (completed) {
+                        JOptionPane.showMessageDialog(this, "Winner");
+                        this.restartLevel();
+                        break;
+                    }
+                }
+            } else if (in[0].equalsIgnoreCase("r")) {
+                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                    if (cekTabrakTembok(human, "r")) {
+                        return;
+                    } else {
+                        human.Gerak(jarak, 0);
+                        isCompleted();
+                        repaint();
+                    }
+                    if (completed) {
+                        JOptionPane.showMessageDialog(this, "Winner");
+                        this.restartLevel();
+                        break;
+                    }
+                }
+            } else if (in[0].equalsIgnoreCase("l")) {
+                for (int i = 0; i < Integer.parseInt(String.valueOf(in[1])); i++) {
+                    if (cekTabrakTembok(human, "l")) {
+                        return;
+                    } else {
+                        human.Gerak(-jarak, 0);
+                        isCompleted();
+                        repaint();
+                    }
+                    if (completed) {
+                        JOptionPane.showMessageDialog(this, "Winner");
+                        this.restartLevel();
+                        break;
+                    }
+                }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Jumlah kata hanya satu");
+            JOptionPane.showMessageDialog(null, "Input Tidak Valid");
         }
     }
 
@@ -243,8 +284,7 @@ public class Peta extends JPanel {
         }
         return bantu;//default return false
     }
-    
-    
+
     public void isCompleted() {
         if (human.getPosisiX() == finish.getPosisiX()) {
             if (human.getPosisiY() == finish.getPosisiY()) {
@@ -269,16 +309,16 @@ public class Peta extends JPanel {
         }
         return bantu;
     }
-     
-     public String Perintah() {
+
+    public String Perintah() {
         String bantu = " ";
         for (int i = 0; i < semuaPerintah.size(); i++) {
             bantu = bantu + semuaPerintah.get(i) + " ";
         }
         return bantu;
     }
-     
-     public void simpan() {
+
+    public void simpan() {
         boolean isi = true;
         int x = 0;
         int poisiX = 0;
@@ -312,7 +352,7 @@ public class Peta extends JPanel {
                     poisiX += jarak;
                 }
             }
-            
+
             if (isi == false && poisiX < (int) objekKolom.get(x)) {
                 map1 = map1 + ".";
                 isi = true;
@@ -329,17 +369,17 @@ public class Peta extends JPanel {
             }
         }
     }
-    
-    public void saveNote(File file){
+
+    public void saveNote(File file) {
         FileOutputStream fos = null;
-        try{
+        try {
             fos = new FileOutputStream(file);
             byte[] array = map1.getBytes();
             fos.write(array);
             fos.close();
-        }catch(FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(model.Peta.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(model.Peta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

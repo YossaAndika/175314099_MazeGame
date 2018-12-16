@@ -36,7 +36,6 @@ public class Peta extends JPanel {
     private final char FINISH = 'o';
     private final char HUMAN = '@';
     private final char KOSONG = '.';
-    private final char N = 'n';
     private int lebar = 0;
     private int tinggi = 0;
     private int jarak = 20;

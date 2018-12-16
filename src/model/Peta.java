@@ -45,7 +45,7 @@ public class Peta extends JPanel {
     private String isi;
 
     private File peta = new File("Image/Maze.txt");
-    private ArrayList semuaPerintah = new ArrayList();
+    private ArrayList<String> semuaPerintah = new ArrayList();
 
     public Peta() {
 
@@ -318,55 +318,10 @@ public class Peta extends JPanel {
         return bantu;
     }
 
-    public void simpan() {
-        boolean isi = true;
-        int x = 0;
-        int poisiX = 0;
-        int posisiY = 0;
-        int fileZise = (int) peta.length();
-        for (int i = 0; i < fileZise; i++) {
-            if (isi) {
-                for (int j = 0; j < tembok.size(); j++) {
-                    model.Tembok wall = (model.Tembok) tembok.get(i);
-                    if (wall.getPosisiX() == poisiX && wall.getPosisiY() == posisiY) {
-                        map1 = map1 + "#";
-                        isi = true;
-                        poisiX += jarak;
-                        break;
-                    } else {
-                        isi = false;
-                    }
-                }
-            }
-            if (isi = false) {
-                if (finish.getPosisiX() == poisiX && finish.getPosisiY() == posisiY) {
-                    map1 = map1 + "o";
-                    isi = true;
-                    poisiX += jarak;
-                }
-            }
-            if (isi = false) {
-                if (human.getPosisiX() == poisiX && human.getPosisiY() == posisiY) {
-                    map1 = map1 + "@";
-                    isi = true;
-                    poisiX += jarak;
-                }
-            }
-
-            if (isi == false && poisiX < (int) objekKolom.get(x)) {
-                map1 = map1 + ".";
-                isi = true;
-                poisiX += jarak;
-            }
-            if (isi == false) {
-                map1 = map1 + "n";
-                map1 = map1 + System.lineSeparator();
-                poisiX = 0;
-                posisiY += jarak;
-                fileZise = fileZise - 2;
-                isi = true;
-                x++;
-            }
+    public void GerakAuto() {
+        String[] pintas = {"r3", "d3", "r2", "d1"};
+        for (int i = 0; i < pintas.length; i++) {
+            PerintahGerak(pintas[i]);
         }
     }
 
@@ -374,13 +329,55 @@ public class Peta extends JPanel {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
-            byte[] array = map1.getBytes();
-            fos.write(array);
+            for (int i = 0; i < this.semuaPerintah.size(); i++) {
+                String data = this.semuaPerintah.get(i) + ",";
+                fos.write(data.getBytes());
+            }
             fos.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(model.Peta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(model.Peta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void load(File file) throws IOException {
+        FileInputStream fis = null;
+        try {
+            String hasilBaca = "";
+            fis = new FileInputStream(file);
+            int dataInt;
+
+            while ((dataInt = fis.read()) != -1) {
+                if ((char) dataInt == ',') {
+                    this.semuaPerintah.add(hasilBaca);
+                    hasilBaca = "";
+                } else {
+                    hasilBaca = hasilBaca + (char) dataInt;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Peta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Peta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void save() {
+        this.saveNote(new File("save.dat"));
+    }
+
+    public void loadData() {
+        this.semuaPerintah.clear();
+        try {
+            Peta map = new Peta(peta);
+            map.load(new File("save.dat"));
+            for (int i = 0; i < map.semuaPerintah.size(); i++) {
+                PerintahGerak(map.semuaPerintah.get(i));
+            }
+            this.saveNote(new File("save.dat"));
+        } catch (IOException ex) {
+            Logger.getLogger(Peta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -51,6 +51,10 @@ public class Peta extends JPanel {
         setPeta(file);
     }
 
+    /**
+     * menterjamahkan isi file txt ke bentuk object
+     * @param file 
+     */
     public void setPeta(File file) {
         try {
             if (file != null) {
@@ -90,6 +94,10 @@ public class Peta extends JPanel {
         }
     }
 
+    /**
+     * menggambarkan image dalam panel
+     * @param g 
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);	   // Hapus background
@@ -115,6 +123,10 @@ public class Peta extends JPanel {
         return this.tinggi;
     }
 
+    /**
+     * untuk mengatur gerak dari karakter pemain
+     * @param input 
+     */
     public void PerintahGerak(String input) {
         String in[] = input.split("");
         if (in[0].equalsIgnoreCase("z") && in[1].matches("[123456789]")) {
@@ -234,6 +246,12 @@ public class Peta extends JPanel {
         }
     }
 
+    /**
+     * mengecek apakah object menabrak tembok
+     * @param pemain
+     * @param input
+     * @return 
+     */
     private boolean cekTabrakTembok(Sel pemain, String input) {
         boolean bantu = false;
         if (input.equalsIgnoreCase("l")) {
@@ -273,6 +291,9 @@ public class Peta extends JPanel {
         return bantu;//default return false
     }
 
+    /**
+     * mengindikasikan game selesai
+     */
     public void isCompleted() {
         if (human.getPosisiX() == finish.getPosisiX()) {
             if (human.getPosisiY() == finish.getPosisiY()) {
@@ -281,6 +302,9 @@ public class Peta extends JPanel {
         }
     }
 
+    /**
+     * memulai permainan dari posisi awal
+     */
     public void restartLevel() {
         semuaPerintah.clear();//hapus semua perintah yang tersimpan
         tembok.clear();//hapus tembok

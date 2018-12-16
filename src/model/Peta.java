@@ -42,7 +42,6 @@ public class Peta extends JPanel {
     private int lebar = 0;
     private int tinggi = 0;
     private int jarak = 20;
-    private String isi;
 
     private File peta = new File("Image/Maze.txt");
     private ArrayList<String> semuaPerintah = new ArrayList();

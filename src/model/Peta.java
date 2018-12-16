@@ -27,11 +27,9 @@ import javax.swing.JPanel;
 public class Peta extends JPanel {
 
     private boolean completed = false;
-    private String map1 = "";
     private ArrayList tembok = new ArrayList();
     private Finish finish;
     private ArrayList map = new ArrayList();
-    private ArrayList objekKolom = new ArrayList();
     private Pemain human;
     private LinkedList<String> undo = new LinkedList<>();
     private final char TEMBOK = '#';
@@ -116,14 +114,6 @@ public class Peta extends JPanel {
 
     public int getTinggi() {
         return this.tinggi;
-    }
-
-    public String getMap1() {
-        return map1;
-    }
-
-    public void setMap1(String map1) {
-        this.map1 = map1;
     }
 
     public void PerintahGerak(String input) {
